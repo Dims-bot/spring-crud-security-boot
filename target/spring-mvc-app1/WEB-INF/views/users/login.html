@@ -1,0 +1,36 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title></title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div>-->
+<!--    <form method="post" action="users/login">-->
+<!--        <input name="j_username"/>-->
+<!--        <input name="j_password"/>-->
+<!--        <input type="submit"/>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+</head>
+<body>
+<h1>Login page</h1>
+<!--<p th:if="${loginError}" class="error">Wrong user or password</p>-->
+<form th:action="@{/login}" method="post">
+    <label for="username">Username</label>:
+    <input type="text" id="username" name="j_username" autofocus="autofocus" /> <br />
+    <br>
+    <label for="password">Password</label>:
+    <input type="password" id="password" name="j_password" /> <br />
+    <br>
+    <input type="submit" value="Log in" />
+</form>
+</body>
+</html>
