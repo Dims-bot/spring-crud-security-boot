@@ -25,10 +25,10 @@
 <!--<p th:if="${loginError}" class="error">Wrong user or password</p>-->
 <form th:action="@{/login}" method="post">
     <label for="username">Username</label>:
-    <input type="text" id="username" name="j_username" autofocus="autofocus" /> <br />
+    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
     <br>
     <label for="password">Password</label>:
-    <input type="password" id="password" name="j_password" /> <br />
+    <input type="password" id="password" name="password" /> <br />
     <br>
     <input type="submit" value="Log in" />
 </form>

@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Size(min = 5, max = 15, message ="Minimum 5 and maximum 15 characters")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
@@ -112,7 +112,7 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) { this.roles = roles;}
 
-    public String getUsername() {return username;}
+
 
     @Override
     public boolean isAccountNonExpired() { return true;}
@@ -126,5 +126,12 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() { return true;}
 
-    public void setUsername(String username) {this.username = username;}
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

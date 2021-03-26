@@ -25,7 +25,7 @@ public class UserDAOImplementation implements UserDAO {
         return allUsers;
     }
 
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
 
         EntityManager em = entityManagerFactory.createEntityManager();
         User user = em.find(User.class, id);
@@ -33,11 +33,13 @@ public class UserDAOImplementation implements UserDAO {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        User user = em.find(User.class, username);
+    public User getUserByUsername(String userName) {
 
-        return user;
+        EntityManager em = entityManagerFactory.createEntityManager();
+        TypedQuery<User> query = em.createQuery("from User user where user.username = :userName", User.class);
+        query.setParameter("userName", userName);
+
+        return query.getSingleResult();
     }
 
 
@@ -50,22 +52,24 @@ public class UserDAOImplementation implements UserDAO {
     }
 
     @Override
-    public void updateUser(int id, User updatedUser) {
+    public void updateUser(Long id, User updatedUser) {
         EntityManager em = entityManagerFactory.createEntityManager();
 
         User userToBeUpdated = em.find(User.class, id);
 
         em.getTransaction().begin();
         userToBeUpdated.setFirstName(updatedUser.getFirstName());
+        userToBeUpdated.setUsername(updatedUser.getUsername());
+        //userToBeUpdated.setUsername(userToBeUpdated.getUsername());
+
         userToBeUpdated.setLastName(updatedUser.getLastName());
         userToBeUpdated.setAge(updatedUser.getAge());
-        //userToBeUpdated.getUsername();
-        userToBeUpdated.getPassword();
+        userToBeUpdated.setPassword(updatedUser.getPassword());
+        //userToBeUpdated.setPassword(userToBeUpdated.getPassword());
         em.getTransaction().commit();
-
     }
 
-    public void deleteUser(int id) {
+    public void deleteUser(Long id) {
 //        Session session = sessionFactory.getCurrentSession();
 //        TypedQuery<User> query = session.createQuery("delete from User " + "where  id =:userId");
 //        query.setParameter("userId", id);
@@ -76,7 +80,6 @@ public class UserDAOImplementation implements UserDAO {
         em.remove(em.find(User.class, id));
         em.getTransaction().commit();
 
-        //users.removeIf(p -> p.getId() == id);
     }
 
 }

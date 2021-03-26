@@ -48,7 +48,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/login").permitAll() //мой вариант
                 // защищенные URL
                 .antMatchers("/users/user").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
-                .antMatchers("/users/admin/**").access("hasAnyRole('ROLE_ADMIN')")
+                //.antMatchers("/users/admin/**").access("hasAnyRole('ROLE_ADMIN')")
+                .antMatchers("/users/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().
 
@@ -61,8 +62,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем action с формы логина
                 .loginProcessingUrl("/login")
                 // Указываем параметры логина и пароля с формы логина
-                .usernameParameter("j_username")
-                .passwordParameter("j_password")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 // даем доступ к форме логина всем
                 .permitAll()
                 .and()

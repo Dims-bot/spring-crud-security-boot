@@ -30,7 +30,7 @@ public class UsersController {
     }
 
     @GetMapping("/users/admin/{id}")                       // insert some number and the number will be use as argument the method
-    public String getUserById(@PathVariable("id") int id, Model model) { // through @PathVariable in int id will be number from url
+    public String getUserById(@PathVariable("id") Long id, Model model) { // through @PathVariable in int id will be number from url
         model.addAttribute("user", userService.getUserById(id));
 
         // get one user by id from DAO & pass to showing by thymeleaf
@@ -43,7 +43,7 @@ public class UsersController {
         return "users/newUser";
     }
 
-    @PostMapping("users/admin")
+    @PostMapping("/users/admin")
     public String createNewUser(@ModelAttribute("user") @Valid User user,
                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors())
@@ -53,33 +53,34 @@ public class UsersController {
     }
 
     @GetMapping("/users/admin/{id}/edit")
-    public String editUserById(Model model, @PathVariable("id") int id) {
+    public String editUserById(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "users/edit";
     }
 
-    @PatchMapping("users/admin/{id}")
+    @PatchMapping("/users/admin/{id}")
     public String updateUserById(@ModelAttribute("user") @Valid User user,
-                                 BindingResult bindingResult, @PathVariable("id") int id) {
+                                 BindingResult bindingResult, @PathVariable("id") Long id) {
         if(bindingResult.hasErrors())
             return "users/edit";
-        userService.updateUser(id, user);
-        //userService.save(user);
 
-        return "redirect:/users/edit";
+        userService.updateUser(id, user);
+
+        return "redirect:users/edit";
     }
 
-    @DeleteMapping("users/admin/{id}")
-    public String deleteUserById(@PathVariable("id") int id) {
+    @DeleteMapping("/users/admin/{id}")
+    public String deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/users/getAllUsers";
     }
 
     //@ResponseBody
-    @GetMapping("users/user")
+    @GetMapping("/users/user")
     public String getUserByLogin (Principal principal, Model model) {
         String name= principal.getName();
         model.addAttribute("user", userService.getUserByUsername(name));
+
         return "users/user";
     }
 
