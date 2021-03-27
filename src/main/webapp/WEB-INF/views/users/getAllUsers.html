@@ -46,6 +46,7 @@
     <tr>
         <th>First name</th>
         <th>Last name</th>
+        <th>Username</th>
         <th>Age</th>
         <th>Operations</th>
     </tr>
@@ -58,10 +59,12 @@
         <td
             th:text="${user.getFirstName()}">First name
         </td>
-        <td th:href="@{/users/admin/{id}(id=${user.getId()})}"
+        <td
             th:text="${user.getLastName()}">Last name
         </td>
-        <td th:text="${user.getAge()}">Age</td>
+        <td
+                th:text="${user.getAge()}">Age
+        </td>
         <td>
             <form th:method="DELETE" th:action="@{/users/admin/{id}(id=${user.getId()})}">
                 <input type="submit" value="Delete"/>
@@ -77,7 +80,14 @@
 </table>
 <br>
 
-<a href="/users/admin/new">Add new user</a>
+<a href="/users/admin/new">Add new user</a><br/>
+<br>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
 
 </body>
 </html>
+
+<!--th:href="@{/users/admin/{id}(id=${user.getId()})}"-->

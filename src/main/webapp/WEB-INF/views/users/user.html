@@ -11,7 +11,14 @@
 <p th:text="${'Age: ' + user.getAge()}">VALUE</p>
 <p th:text="${'ID: ' + user.getId()}">VALUE</p>
 
-<a th:href="@{/users/admin/{id}/edit(id=${user.getId()})}">Edit user!</a>
+<!--<a th:href="@{/users/admin/{id}/edit(id=${user.getId()})}">Edit user!</a>-->
+
+<br/>
+<br>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
 
 </body>
 </html>

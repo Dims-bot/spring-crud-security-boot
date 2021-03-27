@@ -1,6 +1,7 @@
 package ru.jm.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,8 @@ public class UsersController {
 
     //@Autowired
     UserService userService;
+
+    UserDetails userDetails;
 
     public UsersController(UserService userService) {this.userService = userService;}
 
@@ -49,7 +52,7 @@ public class UsersController {
         if (bindingResult.hasErrors())
             return "users/newUser";
         userService.save(user);
-        return "redirect:/users/getAllUsers";
+        return "redirect:/users/admin";
     }
 
     @GetMapping("/users/admin/{id}/edit")
@@ -66,35 +69,37 @@ public class UsersController {
 
         userService.updateUser(id, user);
 
-        return "redirect:users/edit";
+        return "users/edit";
     }
 
     @DeleteMapping("/users/admin/{id}")
     public String deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return "redirect:/users/getAllUsers";
+        return "redirect:/users/admin";
     }
 
     //@ResponseBody
     @GetMapping("/users/user")
-    public String getUserByLogin (Principal principal, Model model) {
+    public String getUserByLogin (Model model,Principal principal) {
         String name= principal.getName();
-        model.addAttribute("user", userService.getUserByUsername(name));
+        model.addAttribute("user",userService.getUserByUsername(name));
+        //model.addAttribute("user", userService.getUserByUsername(name));
+        //model.addAttribute("user", userService.getUserByUsername(userDetails.getUsername()));
 
-        return "users/user";
+        return "/users/user";
     }
 
+//    @GetMapping("/login")
+//    public String loginPage() {
+//        return "users/login";
+//    }
+
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
         return "users/login";
     }
 
-    // Login form with error
-//    @RequestMapping("/login-error")
-//    public String loginError(Model model) {
-//        model.addAttribute("loginError", true);
-//        return "users/login";
-//    }
 
 
 
