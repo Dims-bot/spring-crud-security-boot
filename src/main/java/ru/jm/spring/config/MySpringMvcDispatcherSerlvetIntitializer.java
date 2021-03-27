@@ -30,15 +30,12 @@ public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotation
     public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);
         registerHiddenFieldFilter(aServletContext);
-//        FilterRegistration.Dynamic encodingFilter = aServletContext.addFilter("encoding-filter", new CharacterEncodingFilter());
-//        encodingFilter.setInitParameter("encoding", "UTF-8");
-//        encodingFilter.setInitParameter("forceEncoding", "true");
-//        encodingFilter.addMappingForUrlPatterns(null, true,"/*");
+
     }
 
     private void registerHiddenFieldFilter(ServletContext aContext) {
         aContext.addFilter("hiddenHttpMethodFilter",
-                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
+                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
     }
 
 }

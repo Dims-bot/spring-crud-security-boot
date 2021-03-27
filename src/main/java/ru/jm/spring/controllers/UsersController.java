@@ -1,6 +1,7 @@
 package ru.jm.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,28 +16,25 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-//@RequestMapping("/users") // для всех контроллеров пред их персоналтным "адресом"
 public class UsersController {
 
-    //@Autowired
     UserService userService;
 
-    UserDetails userDetails;
-
-    public UsersController(UserService userService) {this.userService = userService;}
+    public UsersController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/users/admin")
-    public String getAllUsers(Model model) {     // get all users from DAO & pass to showing by thymeleaf
+    public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
 
         return "users/getAllUsers";
     }
 
-    @GetMapping("/users/admin/{id}")                       // insert some number and the number will be use as argument the method
-    public String getUserById(@PathVariable("id") Long id, Model model) { // through @PathVariable in int id will be number from url
+    @GetMapping("/users/admin/{id}")
+    public String getUserById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
 
-        // get one user by id from DAO & pass to showing by thymeleaf
         return "users/getUserByID";
     }
 
@@ -64,7 +62,7 @@ public class UsersController {
     @PatchMapping("/users/admin/{id}")
     public String updateUserById(@ModelAttribute("user") @Valid User user,
                                  BindingResult bindingResult, @PathVariable("id") Long id) {
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return "users/edit";
 
         userService.updateUser(id, user);
@@ -78,30 +76,19 @@ public class UsersController {
         return "redirect:/users/admin";
     }
 
-    //@ResponseBody
     @GetMapping("/users/user")
-    public String getUserByLogin (Model model,Principal principal) {
-        String name= principal.getName();
-        model.addAttribute("user",userService.getUserByUsername(name));
-        //model.addAttribute("user", userService.getUserByUsername(name));
-        //model.addAttribute("user", userService.getUserByUsername(userDetails.getUsername()));
+    public String getUserByLogin(Model model, Principal principal) {
+        String name = principal.getName();
+        model.addAttribute("user", userService.getUserByUsername(name));
 
         return "/users/user";
     }
-
-//    @GetMapping("/login")
-//    public String loginPage() {
-//        return "users/login";
-//    }
 
     @GetMapping("/login")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "users/login";
     }
-
-
-
 
 
 }

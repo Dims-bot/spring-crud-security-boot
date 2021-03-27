@@ -47,8 +47,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").anonymous()
                 // защищенные URL
                 .antMatchers("/users/admin/**").hasRole("ADMIN")
-                .antMatchers("/users/user").hasRole("USER")
-                //.antMatchers("/users/user").hasAnyRole("ADMIN", "USER")
+                //.antMatchers("/users/user").hasRole("USER")
+                .antMatchers("/users/user").hasAnyRole("ADMIN", "USER")
                 //.antMatchers("/users/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and().

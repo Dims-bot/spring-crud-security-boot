@@ -9,7 +9,7 @@ import ru.jm.spring.model.User;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDao;

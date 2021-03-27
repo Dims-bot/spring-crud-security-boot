@@ -58,22 +58,17 @@ public class UserDAOImplementation implements UserDAO {
         User userToBeUpdated = em.find(User.class, id);
 
         em.getTransaction().begin();
+
         userToBeUpdated.setFirstName(updatedUser.getFirstName());
         userToBeUpdated.setUsername(updatedUser.getUsername());
-        //userToBeUpdated.setUsername(userToBeUpdated.getUsername());
-
         userToBeUpdated.setLastName(updatedUser.getLastName());
         userToBeUpdated.setAge(updatedUser.getAge());
         userToBeUpdated.setPassword(updatedUser.getPassword());
-        //userToBeUpdated.setPassword(userToBeUpdated.getPassword());
+
         em.getTransaction().commit();
     }
 
     public void deleteUser(Long id) {
-//        Session session = sessionFactory.getCurrentSession();
-//        TypedQuery<User> query = session.createQuery("delete from User " + "where  id =:userId");
-//        query.setParameter("userId", id);
-//        query.executeUpdate();
         EntityManager em = entityManagerFactory.createEntityManager();
 
         em.getTransaction().begin();

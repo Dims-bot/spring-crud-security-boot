@@ -26,14 +26,14 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:db.properties") //db
+@PropertySource("classpath:db.properties")
 @ComponentScan("ru.jm.spring")
 @EnableWebMvc
-@EnableTransactionManagement //db
+@EnableTransactionManagement
 public class SpringConfig implements WebMvcConfigurer {
 
     @Autowired
-    private Environment env; // db
+    private Environment env;
 
     private final ApplicationContext applicationContext;
 
@@ -66,7 +66,7 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-    @Bean //db
+    @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("db.driver"));
@@ -97,12 +97,12 @@ public class SpringConfig implements WebMvcConfigurer {
 //        return transactionManager;
 //    }
 
-    @Bean //em
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(getDataSource());
-        em.setPackagesToScan(new String [] {"ru.jm.spring"});
+        em.setPackagesToScan(new String[]{"ru.jm.spring"});
 
         Properties props = new Properties();
         props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
@@ -115,7 +115,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return em;
     }
 
-    @Bean //em
+    @Bean
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
@@ -123,11 +123,10 @@ public class SpringConfig implements WebMvcConfigurer {
         return transactionManager;
     }
 
-    @Bean //em
+    @Bean
     PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
-        return  new PersistenceExceptionTranslationPostProcessor();
+        return new PersistenceExceptionTranslationPostProcessor();
     }
-
 
 
 }

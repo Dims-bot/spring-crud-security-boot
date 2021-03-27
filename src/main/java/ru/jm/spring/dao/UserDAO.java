@@ -17,8 +17,5 @@ public interface UserDAO {
 
     public void deleteUser(Long id);
 
-
-    //void updateUser(Long id);
 }
 
-// test branch
