@@ -12,8 +12,12 @@ import java.util.List;
 @Repository
 public class UserDAOImplementation implements UserDAO {
 
-    @Autowired
     private EntityManagerFactory entityManagerFactory;
+
+    @Autowired
+    public UserDAOImplementation(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
     @Override
     public List<User> getAllUsers() {

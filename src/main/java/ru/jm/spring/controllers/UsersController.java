@@ -20,6 +20,7 @@ public class UsersController {
 
     UserService userService;
 
+    @Autowired
     public UsersController(UserService userService) {
         this.userService = userService;
     }
@@ -41,6 +42,7 @@ public class UsersController {
     @GetMapping("/users/admin/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
+
         return "users/newUser";
     }
 
@@ -50,6 +52,7 @@ public class UsersController {
         if (bindingResult.hasErrors())
             return "users/newUser";
         userService.save(user);
+
         return "redirect:/users/admin";
     }
 
@@ -79,7 +82,8 @@ public class UsersController {
     @GetMapping("/users/user")
     public String getUserByLogin(Model model, Principal principal) {
         String name = principal.getName();
-        model.addAttribute("user", userService.getUserByUsername(name));
+        //model.addAttribute("user", userService.getUserByUsername(name));
+        model.addAttribute("user", (User) principal);
 
         return "/users/user";
     }
