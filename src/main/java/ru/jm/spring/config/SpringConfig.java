@@ -87,6 +87,10 @@ public class SpringConfig implements WebMvcConfigurer {
         Properties props = new Properties();
         props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         props.setProperty("hibernate.hbm2ddl.auto", "update");
+        props.setProperty("spring.jpa.show-sql","true");
+        props.setProperty("spring.jpa.properties.hibernate.format_sql", "true");
+        props.setProperty("hibernate.show_sql", "true");
+
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

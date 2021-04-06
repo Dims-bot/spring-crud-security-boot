@@ -24,7 +24,8 @@ public class UserDAOImpl implements UserDAO {
     public List<User> getAllUsers() {
 
         EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<User> query = em.createQuery("from User", User.class);
+        //TypedQuery<User> query = em.createQuery("from User", User.class);
+        TypedQuery<User> query = em.createQuery("select distinct u from User u join fetch u.roles", User.class);
         List<User> allUsers = query.getResultList();
 
         return allUsers;
@@ -41,7 +42,8 @@ public class UserDAOImpl implements UserDAO {
     public User getUserByUsername(String userName) {
 
         EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<User> query = em.createQuery("from User user where user.username = :userName", User.class);
+        //TypedQuery<User> query = em.createQuery("from User user where user.username = :userName", User.class);
+        TypedQuery<User> query = em.createQuery("select user from User user join fetch user.roles where user.username = :userName", User.class);
         query.setParameter("userName", userName);
 
         Optional<User> userFromDbByUserName = Optional.of(query.getSingleResult());
