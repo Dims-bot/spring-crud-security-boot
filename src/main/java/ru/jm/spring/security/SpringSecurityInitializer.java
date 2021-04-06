@@ -1,4 +1,4 @@
-package ru.jm.spring.config;
+package ru.jm.spring.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

@@ -1,4 +1,4 @@
-package ru.jm.spring.config;
+package ru.jm.spring.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.jm.spring.security.LoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity

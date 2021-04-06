@@ -8,14 +8,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class UserDAOImplementation implements UserDAO {
+public class UserDAOImpl implements UserDAO {
 
     private EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public UserDAOImplementation(EntityManagerFactory entityManagerFactory) {
+    public UserDAOImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
 
@@ -43,7 +44,11 @@ public class UserDAOImplementation implements UserDAO {
         TypedQuery<User> query = em.createQuery("from User user where user.username = :userName", User.class);
         query.setParameter("userName", userName);
 
-        return query.getSingleResult();
+        Optional<User> userFromDbByUserName = Optional.of(query.getSingleResult());
+
+        return userFromDbByUserName.orElse(new User());
+
+        //return query.getSingleResult();
     }
 
 
